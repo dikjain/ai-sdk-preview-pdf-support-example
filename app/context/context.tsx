@@ -10,11 +10,15 @@ interface ContextState {
   setQuestions: (questions: Array<{question: string; answer: string}>) => void;
   title: string | undefined;
   setTitle: (title: string | undefined) => void;
-}
+  points: number;
+  setPoints: (points: number) => void;
+    }
 
 const initialState: ContextState = {
   questions: [],
+  points: 0,
   setQuestions: () => {},
+  setPoints: () => {},
   title: undefined,
   setTitle: () => {}
 };
@@ -25,6 +29,7 @@ export function AppContextProvider({ children }: { children: ReactNode }) {
   const [questions, setQuestions] = useState<Array<{question: string; answer: string}>>([]);
   const [title, setTitle] = useState<string | undefined>(undefined);
   const [pdfData , setPdfData] =useState("")
+  const [ points , setPoints ] = useState(0)
 
 
   useEffect(()=>{
@@ -36,7 +41,9 @@ export function AppContextProvider({ children }: { children: ReactNode }) {
       questions,
       setQuestions,
       title,
-      setTitle
+      setTitle,
+      points,
+      setPoints
     }}>
       {children}
     </AppContext.Provider>

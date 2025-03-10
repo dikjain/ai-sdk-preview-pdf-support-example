@@ -4,7 +4,7 @@ import { Toaster } from "sonner";
 import { ThemeProvider } from "next-themes";
 import { Geist } from "next/font/google";
 import { AppContextProvider } from "../context/context";
-
+import PointsBox from "@/components/pointsBox";
 const geist = Geist({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
@@ -23,6 +23,7 @@ export default function RootLayout({
       <body>
         <AppContextProvider>
           <ThemeProvider attribute="class" enableSystem forcedTheme="dark">
+            <PointsBox />
             <Toaster position="top-center" richColors />
             {children}
           </ThemeProvider>

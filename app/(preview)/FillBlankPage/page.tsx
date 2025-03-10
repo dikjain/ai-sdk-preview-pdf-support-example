@@ -6,7 +6,7 @@ import { Button } from "@/components/ui/button";
 import { RotateCw, ArrowRight, ChevronLeft } from "lucide-react";
 import { useAppContext } from "../../context/context";
 import { useRouter } from "next/navigation";
-
+import PointsBox from "@/components/pointsBox";
 // Define question structure
 interface Question {
   question: string;
@@ -19,7 +19,7 @@ export default function FillBlankPage() {
   const [selectedCards, setSelectedCards] = useState<string[]>([]); // Track selected answer cards
   const [fixedCards, setFixedCards] = useState<string[]>([]); // Track correctly answered cards
   const [currentQuestion, setCurrentQuestion] = useState<Question | null>(null);
-  const { title, questions } = useAppContext();
+  const { title, questions, points, setPoints } = useAppContext();
   const router = useRouter();
 
   // Fetch fill-in-the-blank question on component mount
@@ -71,6 +71,7 @@ export default function FillBlankPage() {
         
         if (newSelected.length === 2 && answers.every(answer => newSelected.includes(answer))) {
           setFixedCards(answers);
+          setPoints(points + 1); // Increment points on successful match
         }
       }
     }
@@ -111,6 +112,9 @@ export default function FillBlankPage() {
   // UI Rendering
   return (
     <div className="min-h-screen w-full flex flex-col items-center justify-center bg-gradient-to-b from-zinc-900 via-zinc-800 to-zinc-900 p-4">
+
+<PointsBox />
+
       {/* Back Button */}
       <Button
         onClick={() => router.back()}

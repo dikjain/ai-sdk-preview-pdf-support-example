@@ -6,7 +6,7 @@ import { Button } from "@/components/ui/button";
 import { RotateCw, ChevronLeft } from "lucide-react";
 import { useAppContext } from "../../context/context";
 import { useRouter } from "next/navigation";
-
+import PointsBox from "@/components/pointsBox";
 export default function MatchingPage() {
   // State management for game logic
   const [selectedPair, setSelectedPair] = useState<number[]>([]); // Tracks currently selected cards
@@ -14,7 +14,7 @@ export default function MatchingPage() {
   const [shuffledPairs, setShuffledPairs] = useState<{text: string, id: number}[]>([]); // Stores shuffled Q&A pairs
   
   // Get questions and title from context
-  const { questions, title } = useAppContext();
+  const { questions, title, points, setPoints } = useAppContext();
   const router = useRouter();
 
   // Initialize game on component mount
@@ -40,8 +40,9 @@ export default function MatchingPage() {
       const secondCard = shuffledPairs[newSelected[1]];
 
       if (firstCard.id === secondCard.id) {
-        // Cards match - add to matched pairs
+        // Cards match - add to matched pairs and increment points
         setMatchedPairs([...matchedPairs, firstCard.id]);
+        setPoints(points + 1);
         setSelectedPair([]);
       } else {
         // Cards don't match - flip back after delay
@@ -68,7 +69,7 @@ export default function MatchingPage() {
 
   return (
     <div className="min-h-screen w-full flex flex-col items-center justify-center bg-gradient-to-b from-zinc-900 via-zinc-800 to-zinc-900 p-4 relative">
-      
+      <PointsBox />
       <Button
         onClick={() => router.back()}
         variant="ghost"

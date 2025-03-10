@@ -6,12 +6,12 @@ import { Button } from "@/components/ui/button";
 import { ChevronLeft, ChevronRight, RotateCw } from "lucide-react";
 import { useAppContext } from "../../context/context";
 import { useRouter } from "next/navigation";
-
+import PointsBox from "@/components/pointsBox";
 export default function FlashCardsPage() {
   // State management for flashcard functionality
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isFlipped, setIsFlipped] = useState(false);
-  const { questions, title } = useAppContext();
+  const { questions, title, points, setPoints } = useAppContext();
   const router = useRouter();
 
   // Redirect to home if no questions available
@@ -26,6 +26,10 @@ export default function FlashCardsPage() {
     if (currentIndex < (questions?.length ?? 0) - 1) {
       setCurrentIndex(curr => curr + 1);
       setIsFlipped(false);
+      // Add point when moving to next card after seeing answer
+      if (isFlipped) {
+        setPoints(points + 1);
+      }
     }
   };
 
@@ -33,11 +37,19 @@ export default function FlashCardsPage() {
     if (currentIndex > 0) {
       setCurrentIndex(curr => curr - 1);
       setIsFlipped(false);
+      // Add point when moving to previous card after seeing answer
+      if (isFlipped) {
+        setPoints(points + 1);
+      }
     }
   };
 
   // Card flip handler
   const handleFlip = () => {
+    if (!isFlipped) {
+      // Add point when flipping to see answer
+      setPoints(points + 1);
+    }
     setIsFlipped(!isFlipped);
   };
 
@@ -46,6 +58,7 @@ export default function FlashCardsPage() {
 
   return (
     <div className="min-h-screen w-full flex flex-col items-center justify-center bg-gradient-to-b from-zinc-900 via-zinc-800 to-zinc-900 p-4 relative">
+      <PointsBox />
       <Button
         onClick={() => router.back()}
         variant="ghost"
