@@ -11,13 +11,13 @@ export default function CardsPage() {
 
     switch (mode) {
       case "flashcards":
-        router.push(`/FlashCardsPage?`);
+        router.push(`/FlashCardsPage`);
         break;
       case "quiz":
-        router.push(`/MatchingPage?`);
+        router.push(`/MatchingPage`);
         break;
       case "matching":
-        router.push(`/FillBlankPage?`);
+        router.push(`/FillBlankPage`);
         break;
     }
   };
