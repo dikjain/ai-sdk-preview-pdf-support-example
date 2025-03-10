@@ -1,5 +1,19 @@
 import { z } from "zod";
 
+export const fillInTheBlanksSchema = z.object({
+  question: z.string(),
+  answer: z.string(),
+  options: z
+    .array(z.string())
+    .min(6)
+    .max(8)
+    .describe(
+      "Array of 6-8 possible words to fill in the blanks, including the correct answers and distractors"
+    ),
+});
+
+export type FillInTheBlanks = z.infer<typeof fillInTheBlanksSchema>;
+
 export const questionSchema = z.object({
   question: z.string(),
   options: z
