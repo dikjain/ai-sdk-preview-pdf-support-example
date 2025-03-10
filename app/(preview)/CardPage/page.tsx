@@ -1,27 +1,23 @@
 "use client";
 
 import { useState } from "react";
-import { useSearchParams } from "next/navigation";
 import Modes from "@/app/(preview)/modes";
 import { useRouter } from "next/navigation";
 
 export default function CardsPage() {
-  const searchParams = useSearchParams();
-  const fileId = searchParams.get("fileId");
   const router = useRouter();
 
   const handleSelectMode = async (mode: "quiz" | "flashcards" | "matching" | null) => {
-    if (!fileId) return;
 
     switch (mode) {
       case "flashcards":
-        router.push(`/FlashCardsPage?fileId=${fileId}`);
+        router.push(`/FlashCardsPage?`);
         break;
       case "quiz":
-        router.push(`/MatchingPage?fileId=${fileId}`);
+        router.push(`/MatchingPage?`);
         break;
       case "matching":
-        router.push(`/FillBlankPage?fileId=${fileId}`);
+        router.push(`/FillBlankPage?`);
         break;
     }
   };
